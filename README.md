@@ -1,24 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) to-do app with [Turso](https://turso.tech) database, [Drizzle ORM](https://orm.drizzle.team), and [shadcn/ui](https://ui.shadcn.com).
 
 ## Getting Started
 
-First, run the development server:
+### 1. Set up environment variables
+
+Create a `.env.local` file in the root directory:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+TURSO_DATABASE_URL=libsql://your-database-name.turso.io
+TURSO_AUTH_TOKEN=your-auth-token-here
+```
+
+Get your Turso credentials from the [Turso dashboard](https://turso.tech).
+
+### 2. Push database schema
+
+```bash
+bun run db:push
+```
+
+### 3. Run the development server
+
+```bash
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Database Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `bun run db:generate` - Generate migration files
+- `bun run db:push` - Push schema changes to Turso
 
 ## Learn More
 
