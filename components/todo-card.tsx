@@ -57,20 +57,20 @@ export function TodoCard({ todo }: TodoCardProps) {
     <Card
       className={`animate-fade-in-up transition-all hover:shadow-md hover:-translate-y-1 ${
         urgent ? "border-primary border-2" : ""
-      } ${todo.completed ? "opacity-60" : ""}`}
+      } ${todo.completed ?? false ? "opacity-60" : ""}`}
       style={{ animationDelay: `${todo.id * 50}ms` }}
     >
       <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3">
         <div className="flex items-start space-x-3 flex-1">
           <Checkbox
-            checked={todo.completed}
+            checked={todo.completed ?? false}
             onCheckedChange={handleToggle}
             className="mt-1"
           />
           <div className="flex-1">
             <h3
               className={`text-base font-medium ${
-                todo.completed ? "line-through" : ""
+                todo.completed ?? false ? "line-through" : ""
               }`}
             >
               {todo.title}
