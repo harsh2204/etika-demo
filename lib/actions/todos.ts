@@ -66,3 +66,69 @@ export async function getUpcomingCount() {
   const upcoming = await getUpcomingTodos();
   return upcoming.length;
 }
+
+export async function getTodosDueIn1Day() {
+  const now = new Date();
+  const oneDayInMs = 24 * 60 * 60 * 1000;
+  const windowMs = 2 * 60 * 1000;
+  const targetTime = now.getTime() + oneDayInMs;
+  const windowStart = new Date(targetTime - windowMs);
+  const windowEnd = new Date(targetTime + windowMs);
+
+  const todosDue = await db
+    .select()
+    .from(todos)
+    .where(
+      and(
+        eq(todos.completed, false),
+        isNotNull(todos.dueDate),
+        gte(todos.dueDate, windowStart),
+        lte(todos.dueDate, windowEnd)
+      )
+    );
+  return todosDue;
+}
+
+export async function getTodosDueIn15Min() {
+  const now = new Date();
+  const fifteenMinInMs = 15 * 60 * 1000;
+  const windowMs = 60 * 1000;
+  const targetTime = now.getTime() + fifteenMinInMs;
+  const windowStart = new Date(targetTime - windowMs);
+  const windowEnd = new Date(targetTime + windowMs);
+
+  const todosDue = await db
+    .select()
+    .from(todos)
+    .where(
+      and(
+        eq(todos.completed, false),
+        isNotNull(todos.dueDate),
+        gte(todos.dueDate, windowStart),
+        lte(todos.dueDate, windowEnd)
+      )
+    );
+  return todosDue;
+}
+
+export async function getTodosDueIn1Min() {
+  const now = new Date();
+  const oneMinInMs = 60 * 1000;
+  const windowMs = 30 * 1000;
+  const targetTime = now.getTime() + oneMinInMs;
+  const windowStart = new Date(targetTime - windowMs);
+  const windowEnd = new Date(targetTime + windowMs);
+
+  const todosDue = await db
+    .select()
+    .from(todos)
+    .where(
+      and(
+        eq(todos.completed, false),
+        isNotNull(todos.dueDate),
+        gte(todos.dueDate, windowStart),
+        lte(todos.dueDate, windowEnd)
+      )
+    );
+  return todosDue;
+}

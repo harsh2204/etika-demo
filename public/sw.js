@@ -8,12 +8,17 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  
   event.waitUntil(
-    clients.matchAll().then((clientList) => {
-      if (clientList.length > 0) {
-        return clientList[0].focus();
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url === self.location.origin && "focus" in client) {
+          return client.focus();
+        }
       }
-      return clients.openWindow("/");
+      if (clients.openWindow) {
+        return clients.openWindow("/");
+      }
     })
   );
 });
